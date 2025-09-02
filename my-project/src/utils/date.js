@@ -1,0 +1,16 @@
+const moment = require('moment');
+
+export const convertTimeToDay = (time) => {
+  const timeObject = moment(time, 'YYYY-MM-DD HH:mm');
+  return timeObject.format('dddd');
+};
+
+export const convertTimeToDate = (time) => {
+  const timeObject = moment(time, 'YYYY-MM-DD HH:mm');
+  return timeObject.format('DD MMMM YYYY');
+};
+
+export const reformatTime = (time) => {
+  const timeObject = moment(time, 'HH:mm');
+  return timeObject.format('LT');
+};

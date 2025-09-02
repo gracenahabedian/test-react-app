@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 function Navbar() {
   return (
-    <div className='h-20 bg-gray-100 flex gap-4 px-16 items-center'>
+    <div className='h-20 bg-[#D8E6EA] flex gap-4 px-16 items-center'>
       <Link to={'/'}>
         <div className='h-14 w-14 bg-blue-500 rounded-full' />
       </Link>

@@ -6,12 +6,12 @@ import Footer from './Footer';
 
 function Layout() {
   return (
-    <div className='flex flex-col h-svh'>
+    <div className='flex flex-col h-svh bg-white'>
       <Navbar />
       <div className='flex-1 h-full'>
         <Outlet />
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
