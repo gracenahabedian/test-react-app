@@ -13,7 +13,7 @@ const DashboardWeatherOverview = ({
   icon,
 }) => {
   return (
-    <div className='flex flex-1 h-1/2 max-md:h-full bg-gradient-to-r from-[white] to-[#D8E6EA] rounded-[20px] drop-shadow-lg'>
+    <div className='flex h-1/2 max-md:h-full bg-gradient-to-r from-[white] to-[#D8E6EA] rounded-[20px] drop-shadow-lg'>
       <div className='LHS flex flex-col ml-12 mt-6 mb-14 flex-1'>
         <div className='flex-1'>
           <div className='flex drop-shadow-lg rounded-[20px] w-[155px] h-8 bg-gradient-to-r from-white to-[#98bac4]'>

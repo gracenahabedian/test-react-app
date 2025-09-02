@@ -15,7 +15,7 @@ const DashboardCurrentHighlights = ({
   sunset,
 }) => {
   return (
-    <div className='flex-1 max-md:h-full bg-gradient-to-r from-[#e7f1f4] to-[#92bbc6] rounded-[20px] drop-shadow-lg'>
+    <div className='h-1/2 flex flex-col max-md:h-full bg-gradient-to-r from-[#e7f1f4] to-[#92bbc6] rounded-[20px] drop-shadow-lg'>
       <div className='mt-4 ml-8'>
         <h1 className='text-2xl font-semibold'>Today's Highlight</h1>
       </div>

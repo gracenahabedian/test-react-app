@@ -105,7 +105,7 @@ function Weather() {
           sunset={sunset}
         />
 
-        <div className='flex-1 bg-[#e7f1f4] rounded-[20px] drop-shadow-lg'>
+        <div className='h-1/2 flex bg-[#e7f1f4] rounded-[20px] drop-shadow-lg'>
           {/* <p className='text-black'>
             Find the weather in <Link to={'/weather/Paris'}>Paris</Link>,{' '}
             <Link to={'/weather/Sydney'}>Sydney</Link>, or{' '}
