@@ -11,6 +11,11 @@ export const convertTimeToDate = (time) => {
 };
 
 export const reformatTime = (time) => {
-  const timeObject = moment(time, 'HH:mm');
+  const timeObject = moment(time, 'HH:mm A');
+  return timeObject.format('LT');
+};
+
+export const convertDatetoTime = (date) => {
+  const timeObject = moment(date, 'YYYY-MM-DD HH:mm');
   return timeObject.format('LT');
 };

@@ -13,12 +13,18 @@ import humidityIcon from '../icons/humidity-2.png';
 import visibilityIcon from '../icons/visibility.png';
 import sunriseIcon from '../icons/sunrise-2.png';
 import sunsetIcon from '../icons/sunset-2.png';
+import airQualityIcon from '../icons/air-quality-1.png';
 import DashboardWeatherOverview from '../components/DashboardWeatherOverview';
 import DashboardWeeklyOverview from '../components/DashboardWeeklyOverview';
 import DashboardCurrentHighlights from '../components/DashboardCurrentHighlights';
+import rainIcon from '../icons/water-drops (1).png';
+import DashboardHourlyForecast from '../components/DashboardHourlyForecast';
 
 function Weather() {
-  const { location } = useParams(); // Extracts the 'userId' parameter from the URL
+  const { location } = useParams(); // Extracts the 'location' parameter from the URL
+
+  const [weatherData, setWeatherData] = useState({});
+  // put in one big object
   const [currentTemp, setCurrentTemp] = useState(null);
   const [date, setDate] = useState('');
   const [day, setDay] = useState('');
@@ -32,6 +38,12 @@ function Weather() {
   const [uv, setUv] = useState(null);
   const [sunrise, setSunrise] = useState('');
   const [sunset, setSunset] = useState('');
+  const [airQuality, setAirQuality] = useState(null);
+  const [rainChance, setRainChance] = useState(null);
+  const [hourlyForecast, setHourlyForecast] = useState([]);
+
+  // part of a button
+  const [tempUnit, setTempUnit] = useState('C');
 
   const fetchData = async () => {
     try {
@@ -50,7 +62,7 @@ function Weather() {
       setUv(weatherJson.current.uv);
 
       const forecastResponse = await fetch(
-        `http://api.weatherapi.com/v1/forecast.json?key=${process.env.REACT_APP_API_KEY}&q=${location}`
+        `http://api.weatherapi.com/v1/forecast.json?key=${process.env.REACT_APP_API_KEY}&q=${location}&aqi=yes&dt=2025-09-06`
       );
       const forecastJson = await forecastResponse.json();
       setHigh(forecastJson.forecast.forecastday[0].day.maxtemp_c);
@@ -60,6 +72,22 @@ function Weather() {
       );
       setSunset(
         reformatTime(forecastJson.forecast.forecastday[0].astro.sunset)
+      );
+      setAirQuality(
+        forecastJson.forecast.forecastday[0].day.air_quality['us-epa-index']
+      );
+      setRainChance(
+        forecastJson.forecast.forecastday[0].day.daily_chance_of_rain
+      );
+      setHourlyForecast(
+        forecastJson.forecast.forecastday[0].hour.map((h) => {
+          return {
+            condition: h.condition.text,
+            date: h.time,
+            temp_c: h.temp_c,
+            temp_f: h.temp_f,
+          };
+        })
       );
     } catch (error) {
       // setError(error);
@@ -86,8 +114,10 @@ function Weather() {
           condition={condition}
           feelsLike={feelsLike}
           icon={icon}
+          tempUnit={tempUnit}
+          setTempUnit={setTempUnit}
         />
-        <DashboardWeeklyOverview icon={icon} />
+        <DashboardWeeklyOverview tempUnit={tempUnit} />
       </div>
       <div className='flex h-full w-[60%] flex-col gap-6 max-md:w-full'>
         <DashboardCurrentHighlights
@@ -103,10 +133,13 @@ function Weather() {
           sunrise={sunrise}
           sunsetIcon={sunsetIcon}
           sunset={sunset}
+          airQuality={airQuality}
+          airQualityIcon={airQualityIcon}
+          rainChance={rainChance}
+          rainIcon={rainIcon}
         />
 
-        <div className='h-1/2 flex bg-[#e7f1f4] rounded-[20px] drop-shadow-lg'>
-          {/* <p className='text-black'>
+        {/* <p className='text-black'>
             Find the weather in <Link to={'/weather/Paris'}>Paris</Link>,{' '}
             <Link to={'/weather/Sydney'}>Sydney</Link>, or{' '}
             <Link to={'/weather/Berlin'}>Berlin</Link>
@@ -115,8 +148,10 @@ function Weather() {
             Looking for Weather in {location}...
           </p>
           {currentTemp} */}
-          <Link to={'/weather/Sydney'}>Sydney</Link>
-        </div>
+        <DashboardHourlyForecast
+          tempUnit={tempUnit}
+          hourlyForecast={hourlyForecast}
+        />
       </div>
     </div>
   );
