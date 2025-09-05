@@ -3,6 +3,7 @@ import DayOfWeekForcast from './HourOfDayForcast';
 import icon from '../icons/Rainy.png';
 import { convertDatetoTime } from '../utils/date';
 import HourOfDayForcast from './HourOfDayForcast';
+import { mapConditionToIcon } from '../utils/mapConditionToIcon';
 
 const DashboardHourlyForecast = ({ tempUnit, hourlyForecast }) => {
   // const weeklyData = [
@@ -15,14 +16,38 @@ const DashboardHourlyForecast = ({ tempUnit, hourlyForecast }) => {
   //   { day: 'Sun', temp: '24', icon },
   // ];
 
-  hourlyForecast.map((hour) => {
+  // hourlyForecast.map((hour) => {
+  //   return {
+  //     time: hour.time,
+  //     condition: hour.condition,
+  //     temp_c: hour.temp_c,
+  //     temp_f: hour.temp_f,
+  //   };
+  // });
+
+  hourlyForecast = hourlyForecast.map((hour) => {
     return {
-      time: convertDatetoTime(hour.date),
+      time: hour.time,
       condition: hour.condition,
-      temp_c: hour.temp_c,
+      temp: hour.temp_c,
       temp_f: hour.temp_f,
+      temp_c: hour.temp_c,
+      icon: mapConditionToIcon(hour.condition),
     };
   });
+
+  if (tempUnit === 'F') {
+    hourlyForecast = hourlyForecast.map((hour) => {
+      return {
+        time: hour.time,
+        condition: hour.condition,
+        temp: hour.temp_f,
+        temp_f: hour.temp_f,
+        temp_c: hour.temp_c,
+        icon: mapConditionToIcon(hour.condition),
+      };
+    });
+  }
 
   return (
     <div className='flex flex-col h-1/2 max-md:h-full bg-[#e7f1f4] rounded-[20px] drop-shadow-lg max-md:min-h-80'>
@@ -34,10 +59,10 @@ const DashboardHourlyForecast = ({ tempUnit, hourlyForecast }) => {
           {hourlyForecast.map((hour) => (
             <li>
               <HourOfDayForcast
-                hour={hour.time}
+                time={convertDatetoTime(hour.time)}
                 temp={hour.temp}
                 tempUnit={tempUnit}
-                icon={icon}
+                icon={hour.icon}
               />
             </li>
           ))}

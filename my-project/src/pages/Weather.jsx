@@ -83,7 +83,7 @@ function Weather() {
         forecastJson.forecast.forecastday[0].hour.map((h) => {
           return {
             condition: h.condition.text,
-            date: h.time,
+            time: h.time,
             temp_c: h.temp_c,
             temp_f: h.temp_f,
           };
