@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
   convertTimeToDate,
   convertTimeToDay,
@@ -11,14 +11,16 @@ import DashboardWeeklyOverview from '../components/DashboardWeeklyOverview';
 import DashboardCurrentHighlights from '../components/DashboardCurrentHighlights';
 import DashboardHourlyForecast from '../components/DashboardHourlyForecast';
 import { mapConditionToIcon } from '../utils/mapConditionToIcon';
-import { getCurrentData, getForecastData } from '../utils/API';
-
+import {
+  getThreeDayForecast,
+  getCurrentData,
+  getForecastData,
+} from '../utils/API';
+import SearchBar from '../components/SearchBar';
 const moment = require('moment');
 
 function Weather() {
-  const { location } = useParams(); // Extracts the 'location' parameter from the URL
-
-  const [weather, setWeather] = useState({
+  const emptyWeatherData = {
     currentTemp: '',
     date: '',
     day: '',
@@ -35,7 +37,12 @@ function Weather() {
     airQuality: '',
     rainChance: '',
     hourlyForecast: [],
-  });
+    threeDayForecast: [],
+  };
+  const navigate = useNavigate();
+  const { location } = useParams(); // Extracts the 'location' parameter from the URL
+  const [search, setSearch] = useState('');
+  const [weather, setWeather] = useState(emptyWeatherData);
 
   // part of a button
   const [tempUnit, setTempUnit] = useState('C');
@@ -43,6 +50,7 @@ function Weather() {
   const fetchData = async () => {
     const wData = await getCurrentData(location);
     const fData = await getForecastData(location);
+    const f3Data = await getThreeDayForecast(location);
 
     const sunriseTemp = fData.forecast.forecastday[0].astro.sunrise;
     const sunsetTemp = fData.forecast.forecastday[0].astro.sunset;
@@ -81,6 +89,7 @@ function Weather() {
       airQuality: fData.forecast.forecastday[0].day.air_quality['us-epa-index'],
       rainChance: fData.forecast.forecastday[0].day.daily_chance_of_rain,
       hourlyForecast,
+      threeDayForecast: f3Data,
     });
   };
 
@@ -88,27 +97,37 @@ function Weather() {
     fetchData();
   }, [location]);
 
+  useEffect(() => {
+    if (search != '') {
+      setWeather(emptyWeatherData);
+      navigate(`/weather/${search}`);
+    }
+  }, [search]);
+
   return (
-    <div className='h-full p-6 flex gap-6 max-md:flex-col'>
-      <div className='flex h-full flex-col gap-6 w-[40%] max-md:w-full'>
-        <DashboardWeatherOverview
-          location={location}
-          weather={weather}
-          tempUnit={tempUnit}
-          setTempUnit={setTempUnit}
-        />
-        <DashboardWeeklyOverview tempUnit={tempUnit} />
-      </div>
-      <div className='flex h-full w-[60%] flex-col gap-6 max-md:w-full'>
-        <DashboardCurrentHighlights weather={weather} />
-        <DashboardHourlyForecast
-          tempUnit={tempUnit}
-          hourlyForecast={weather.hourlyForecast}
-        />
+    <div className='h-full w-full flex-col flex'>
+      <SearchBar setSearch={setSearch} />
+
+      <div className='flex-1 p-6 flex gap-6 max-md:flex-col'>
+        <div className='flex h-full flex-col gap-6 w-[40%] max-md:w-full'>
+          <DashboardWeatherOverview
+            location={location}
+            weather={weather}
+            tempUnit={tempUnit}
+            setTempUnit={setTempUnit}
+          />
+          <DashboardWeeklyOverview tempUnit={tempUnit} />
+        </div>
+        <div className='flex h-full w-[60%] flex-col gap-6 max-md:w-full'>
+          <DashboardCurrentHighlights weather={weather} />
+          <DashboardHourlyForecast
+            tempUnit={tempUnit}
+            hourlyForecast={weather.hourlyForecast}
+          />
+        </div>
       </div>
     </div>
   );
 }
-// #D8E6EA
 
 export default Weather;
