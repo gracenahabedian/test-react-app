@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import locationIcon from '../icons/pin.png';
 import icon from '../icons/Rainy.png';
+import { mapConditionToIcon } from '../utils/mapConditionToIcon';
+import { timeBetween } from '../utils/date';
+const moment = require('moment');
 
 const DashboardWeatherOverview = ({
   location,
@@ -23,10 +26,12 @@ const DashboardWeatherOverview = ({
         <h1 className='text-4xl font-semibold'>{weather?.day}</h1>
         <p>{weather?.date}</p>
         <p className='text-5xl font-bold mt-10'>
-          {tempUnit == 'C' ? weather?.currentTemp : 'XYZ'}°{tempUnit}
+          {tempUnit === 'C' ? weather?.currentTempC : weather?.currentTempF}°
+          {tempUnit}
         </p>
         <p>
-          High: {weather?.high} Low: {weather?.low}
+          High: {tempUnit === 'C' ? weather?.highC : weather?.highF} Low:{' '}
+          {tempUnit === 'C' ? weather?.lowC : weather?.lowF}
         </p>
       </div>
 
@@ -59,12 +64,25 @@ const DashboardWeatherOverview = ({
                 </div>
               </div>
             </div>
-            <img src={icon} className='h-8/12 drop-shadow-lg' />
+            <img
+              src={mapConditionToIcon(
+                weather?.condition,
+                !timeBetween(
+                  moment(weather?.time, 'YYYY-MM-DD HH:mm A'),
+                  moment(weather?.sunriseTemp, 'HH:mm A'),
+                  moment(weather?.sunsetTemp, 'HH:mm A')
+                )
+              )}
+              className='h-8/12 drop-shadow-lg'
+            />
           </div>
 
           <div className='flex flex-col mt-2 items-center'>
             <p className='text-2xl font-medium'>{weather?.condition}</p>
-            <p className='text-[15px]'>Feels Like {weather?.feelsLike}</p>
+            <p className='text-[15px]'>
+              Feels Like{' '}
+              {tempUnit === 'C' ? weather?.feelsLikeC : weather?.feelsLikeF}
+            </p>
           </div>
         </div>
       </div>

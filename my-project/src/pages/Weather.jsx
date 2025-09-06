@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
+  convertDatetoTime,
   convertTimeToDate,
   convertTimeToDay,
   reformatTime,
@@ -22,13 +23,18 @@ const moment = require('moment');
 
 function Weather() {
   const emptyWeatherData = {
-    currentTemp: '',
+    currentTempC: '',
     date: '',
     day: '',
-    high: '',
-    low: '',
+    time: '',
+    highC: '',
+    lowC: '',
     condition: '',
-    feelsLike: '',
+    feelsLikeC: '',
+    currentTempF: '',
+    highF: '',
+    lowF: '',
+    feelsLikeF: '',
     wind: '',
     humidity: '',
     visibility: '',
@@ -74,17 +80,22 @@ function Weather() {
 
     setWeather({
       ...weather,
-      currentTemp: wData.current.temp_c,
+      currentTempC: wData.current.temp_c,
       date: convertTimeToDate(wData.current.last_updated),
       day: convertTimeToDay(wData.current.last_updated),
+      time: convertDatetoTime(wData.current.last_updated),
       condition: wData.current.condition.text,
-      feelsLike: wData.current.feelslike_c,
+      feelsLikeC: wData.current.feelslike_c,
+      currentTempF: wData.current.temp_f,
+      highF: fData.forecast.forecastday[0].day.maxtemp_f,
+      lowF: fData.forecast.forecastday[0].day.mintemp_f,
+      feelsLikeF: wData.current.feelslike_f,
       wind: wData.current.wind_kph,
       humidity: wData.current.humidity,
       visibility: wData.current.vis_km,
       uv: wData.current.uv,
-      high: fData.forecast.forecastday[0].day.maxtemp_c,
-      low: fData.forecast.forecastday[0].day.mintemp_c,
+      highC: fData.forecast.forecastday[0].day.maxtemp_c,
+      lowC: fData.forecast.forecastday[0].day.mintemp_c,
       sunrise: reformatTime(sunriseTemp),
       sunset: reformatTime(sunsetTemp),
       airQuality: fData.forecast.forecastday[0].day.air_quality['us-epa-index'],
@@ -130,7 +141,10 @@ function Weather() {
             tempUnit={tempUnit}
             setTempUnit={setTempUnit}
           />
-          <DashboardWeeklyOverview tempUnit={tempUnit} />
+          <DashboardWeeklyOverview
+            tempUnit={tempUnit}
+            threeDayForecast={weather.threeDayForecast}
+          />
         </div>
         <div className='flex h-full w-[60%] flex-col gap-6 max-md:w-full'>
           <DashboardCurrentHighlights weather={weather} />

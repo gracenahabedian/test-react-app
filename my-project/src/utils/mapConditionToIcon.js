@@ -12,28 +12,37 @@ import cloudy from '../icons/cloudy.png';
 import misty from '../icons/fog.png';
 
 export const mapConditionToIcon = (condition, isNight) => {
-  if (condition === 'Sunny') {
+  if (condition === 'Sunny' || condition.includes('Sunny')) {
     return sunny;
-  } else if (condition === 'Clear ') {
+  } else if (condition === 'Clear' || condition.includes('Clear')) {
     return clearNight;
   } else if (
-    (condition === 'Partly Cloudy ' || condition === 'Cloudy ') &&
+    (condition === 'Partly Cloudy ' ||
+      condition === 'Cloudy ' ||
+      condition.includes('Partly Cloudy') ||
+      condition.includes('Cloudy')) &&
     isNight
   ) {
     return partlyCloudlyNight;
-  } else if (condition === 'Partly Cloudy ') {
+  } else if (
+    condition === 'Partly Cloudy ' ||
+    condition.includes('Partly cloudy') ||
+    condition.includes('Partly Cloudy')
+  ) {
     return partlyCloudy;
-  } else if (condition === 'Cloudy ') {
+  } else if (condition === 'Cloudy ' || condition.includes('Cloudy')) {
     return cloudy;
-  } else if (condition === 'Overcast ') {
+  } else if (condition === 'Overcast ' || condition.includes('Overcast')) {
     return overcast;
   } else if (
     condition === 'Thundery outbreaks possible ' ||
+    condition === 'Thundery outbreaks nearby ' ||
     condition === 'Patchy light rain with thunder ' ||
     condition === 'Moderate or heavy rain with thunder ' ||
     condition === 'Patchy light snow with thunder ' ||
     condition === 'Moderate or heavy snow with thunder ' ||
-    condition.includes('thunder')
+    condition.includes('thunder') ||
+    condition.includes('Thunder')
   ) {
     return rainThunder;
   } else if (
@@ -42,7 +51,8 @@ export const mapConditionToIcon = (condition, isNight) => {
     condition === 'Freezing fog ' ||
     condition.includes('fog') ||
     condition.includes('Mist') ||
-    condition.includes('Fog')
+    condition.includes('Fog') ||
+    condition.includes('mist')
   ) {
     return misty;
   } else if (
@@ -64,7 +74,9 @@ export const mapConditionToIcon = (condition, isNight) => {
     condition === 'Moderate or heavy rain shower ' ||
     condition === 'Torrential rain shower ' ||
     condition.includes('rain') ||
-    condition.includes('drizzle')
+    condition.includes('drizzle') ||
+    condition.includes('Rain') ||
+    condition.includes('Drizzle')
   ) {
     return rainy;
   } else if (
@@ -90,7 +102,11 @@ export const mapConditionToIcon = (condition, isNight) => {
     condition.includes('snow') ||
     condition.includes('sleet') ||
     condition.includes('Blizzard') ||
-    condition.includes('pellets')
+    condition.includes('pellets') ||
+    condition.includes('Snow') ||
+    condition.includes('Sleet') ||
+    condition.includes('blizzard') ||
+    condition.includes('Pellets')
   ) {
     return snowy;
   }
