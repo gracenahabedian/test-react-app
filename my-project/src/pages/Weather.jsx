@@ -17,6 +17,7 @@ import {
   getForecastData,
 } from '../utils/API';
 import SearchBar from '../components/SearchBar';
+import { cities } from '../cityData';
 const moment = require('moment');
 
 function Weather() {
@@ -98,11 +99,24 @@ function Weather() {
   }, [location]);
 
   useEffect(() => {
+    // do a check here and see if the search exists in the cityData
+    // if it doesnt exist, then send to error page
     if (search != '') {
       setWeather(emptyWeatherData);
       navigate(`/weather/${search}`);
     }
   }, [search]);
+
+  // if location is not valid
+  if (location) {
+    if (!cities.map((c) => c.toLowerCase()).includes(location.toLowerCase())) {
+      return (
+        <div className='h-full w-full flex-col flex justify-center items-center'>
+          <h1>Sorry! We can't find any valid weather data for "{location}"</h1>
+        </div>
+      );
+    }
+  }
 
   return (
     <div className='h-full w-full flex-col flex'>
