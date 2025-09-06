@@ -7,17 +7,13 @@ const DashboardWeeklyOverview = ({ tempUnit }) => {
     { day: 'Mon', temp: '20', icon },
     { day: 'Tue', temp: '22', icon },
     { day: 'Wed', temp: '21', icon },
-    { day: 'Thu', temp: '29', icon },
-    { day: 'Fri', temp: '24', icon },
-    { day: 'Sat', temp: '28', icon },
-    { day: 'Sun', temp: '24', icon },
   ];
   return (
     <div className='flex flex-col h-1/2 max-md:h-full bg-[#e7f1f4] rounded-[20px] drop-shadow-lg max-md:min-h-80'>
       <div className='mt-4 ml-8'>
         <h1 className='text-2xl font-semibold'>Weekly Forecast</h1>
       </div>
-      <div className='flex flex-1 p-6 justify-between'>
+      <div className='flex flex-col flex-1 p-6 gap-2'>
         {weeklyData.map((dayData) => (
           <DayOfWeekForcast
             day={dayData.day}

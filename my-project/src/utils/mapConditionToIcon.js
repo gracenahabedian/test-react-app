@@ -11,11 +11,16 @@ import sunny from '../icons/Sunny.png';
 import cloudy from '../icons/cloudy.png';
 import misty from '../icons/fog.png';
 
-export const mapConditionToIcon = (condition, sunrise, sunset) => {
+export const mapConditionToIcon = (condition, isNight) => {
   if (condition === 'Sunny') {
     return sunny;
   } else if (condition === 'Clear ') {
     return clearNight;
+  } else if (
+    (condition === 'Partly Cloudy ' || condition === 'Cloudy ') &&
+    isNight
+  ) {
+    return partlyCloudlyNight;
   } else if (condition === 'Partly Cloudy ') {
     return partlyCloudy;
   } else if (condition === 'Cloudy ') {

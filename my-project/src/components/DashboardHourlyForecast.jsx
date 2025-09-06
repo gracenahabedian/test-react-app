@@ -32,7 +32,7 @@ const DashboardHourlyForecast = ({ tempUnit, hourlyForecast }) => {
       temp: hour.temp_c,
       temp_f: hour.temp_f,
       temp_c: hour.temp_c,
-      icon: mapConditionToIcon(hour.condition),
+      icon: hour.icon,
     };
   });
 
@@ -44,7 +44,7 @@ const DashboardHourlyForecast = ({ tempUnit, hourlyForecast }) => {
         temp: hour.temp_f,
         temp_f: hour.temp_f,
         temp_c: hour.temp_c,
-        icon: mapConditionToIcon(hour.condition),
+        icon: hour.icon,
       };
     });
   }

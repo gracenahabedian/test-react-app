@@ -1,23 +1,14 @@
 import React from 'react';
+import windIcon from '../icons/wind.png';
+import uvIcon from '../icons/ultraviolet.png';
+import humidityIcon from '../icons/humidity-2.png';
+import visibilityIcon from '../icons/visibility.png';
+import sunriseIcon from '../icons/sunrise-2.png';
+import sunsetIcon from '../icons/sunset-2.png';
+import airQualityIcon from '../icons/air-quality-1.png';
+import rainIcon from '../icons/water-drops (1).png';
 
-const DashboardCurrentHighlights = ({
-  windIcon,
-  wind,
-  uvIcon,
-  uv,
-  humidityIcon,
-  humidity,
-  visibility,
-  visibilityIcon,
-  sunriseIcon,
-  sunrise,
-  sunsetIcon,
-  sunset,
-  airQuality,
-  airQualityIcon,
-  rainChance,
-  rainIcon,
-}) => {
+const DashboardCurrentHighlights = ({ weather }) => {
   const possibleAirQualityData = [
     { airQuality: 1, desc: 'Good' },
     { airQuality: 2, desc: 'Moderate' },
@@ -28,7 +19,7 @@ const DashboardCurrentHighlights = ({
   ];
 
   const airQualityArray = possibleAirQualityData.filter(
-    (airQualityData) => airQualityData.airQuality === airQuality
+    (airQualityData) => airQualityData.airQuality === weather?.airQuality
   );
 
   let airQualityDesc = '';
@@ -49,7 +40,7 @@ const DashboardCurrentHighlights = ({
               <p>Wind Status</p>
             </div>
             <div className='flex flex-row justify-end mt-2 mr-[18px]'>
-              <p className='font-semibold text-2xl'>{wind}</p>
+              <p className='font-semibold text-2xl'>{weather?.wind}</p>
               <p className='text-sm mt-2 ml-2'>km / h</p>
             </div>
           </div>
@@ -59,7 +50,7 @@ const DashboardCurrentHighlights = ({
               <p>UV Index</p>
             </div>
             <div className='flex flex-row justify-end mt-2 mr-7'>
-              <p className='font-semibold text-2xl'>{uv}</p>
+              <p className='font-semibold text-2xl'>{weather?.uv}</p>
               <p className='text-sm mt-2 ml-2'>uv</p>
             </div>
           </div>
@@ -71,7 +62,7 @@ const DashboardCurrentHighlights = ({
               <p>Humidity</p>
             </div>
             <div className='flex flex-row justify-end mt-2 mr-7'>
-              <p className='font-semibold text-2xl'>{humidity}</p>
+              <p className='font-semibold text-2xl'>{weather?.humidity}</p>
               <p className='text-sm mt-2 ml-2'>%</p>
             </div>
           </div>
@@ -81,7 +72,7 @@ const DashboardCurrentHighlights = ({
               <p>Visibility</p>
             </div>
             <div className='flex flex-row justify-end mt-2 mr-8'>
-              <p className='font-semibold text-2xl'>{visibility}</p>
+              <p className='font-semibold text-2xl'>{weather?.visibility}</p>
               <p className='text-sm mt-2 ml-2'>km</p>
             </div>
           </div>
@@ -93,7 +84,7 @@ const DashboardCurrentHighlights = ({
               <p>Air Quality</p>
             </div>
             <div className='flex flex-row justify-end mt-2 mr-7'>
-              <p className='font-semibold text-2xl'>{airQuality}</p>
+              <p className='font-semibold text-2xl'>{weather?.airQuality}</p>
               <p className='text-sm mt-2 ml-2'>{airQualityDesc}</p>
             </div>
           </div>
@@ -103,7 +94,7 @@ const DashboardCurrentHighlights = ({
               <p>Rain Chance</p>
             </div>
             <div className='flex flex-row justify-end mt-2 mr-8'>
-              <p className='font-semibold text-2xl'>{rainChance}</p>
+              <p className='font-semibold text-2xl'>{weather?.rainChance}</p>
               <p className='text-sm mt-2 ml-2'>%</p>
             </div>
           </div>
@@ -116,7 +107,7 @@ const DashboardCurrentHighlights = ({
             <div className='flex flex-1 flex-col justify-center items-end'>
               <div className='flex flex-col justify-end'>
                 <p className='text-sm mr-[42px]'>Sunrise</p>
-                <p className='font-semibold text-2xl'>{sunrise}</p>
+                <p className='font-semibold text-2xl'>{weather?.sunrise}</p>
               </div>
             </div>
           </div>
@@ -127,7 +118,7 @@ const DashboardCurrentHighlights = ({
             <div className='flex flex-1 flex-col justify-center items-end mr-7'>
               <div className='flex flex-col justify-end'>
                 <p className='text-sm mr-[42px]'>Sunset</p>
-                <p className='font-semibold text-2xl'>{sunset}</p>
+                <p className='font-semibold text-2xl'>{weather?.sunset}</p>
               </div>
             </div>
           </div>

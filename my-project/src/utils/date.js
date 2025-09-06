@@ -20,6 +20,6 @@ export const convertDatetoTime = (date) => {
   return timeObject.format('LT');
 };
 
-export const timeGreaterThan = (time1, time2) => {};
-
-export const timeLessThan = () => {};
+export const timeBetween = (time1, time2, time3) => {
+  return time1.isBetween(time2, time3);
+};

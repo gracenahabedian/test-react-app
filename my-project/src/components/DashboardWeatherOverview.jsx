@@ -1,16 +1,10 @@
 import React, { useState } from 'react';
+import locationIcon from '../icons/pin.png';
+import icon from '../icons/Rainy.png';
 
 const DashboardWeatherOverview = ({
-  location_icon,
   location,
-  day,
-  date,
-  currentTemp,
-  high,
-  low,
-  condition,
-  feelsLike,
-  icon,
+  weather,
   tempUnit,
   setTempUnit,
 }) => {
@@ -19,20 +13,20 @@ const DashboardWeatherOverview = ({
       <div className='LHS flex flex-col ml-12 mt-6 mb-14 flex-1'>
         <div className='flex-1'>
           <div className='flex drop-shadow-lg rounded-[20px] w-[155px] h-8 bg-gradient-to-r from-white to-[#98bac4]'>
-            <img src={location_icon} className='h-5 mt-[6px] ml-3' />
+            <img src={locationIcon} className='h-5 mt-[6px] ml-3' />
             <div className='flex items-center ml-2'>
               <p>{location}</p>
             </div>
           </div>
         </div>
 
-        <h1 className='text-4xl font-semibold'>{day}</h1>
-        <p>{date}</p>
+        <h1 className='text-4xl font-semibold'>{weather?.day}</h1>
+        <p>{weather?.date}</p>
         <p className='text-5xl font-bold mt-10'>
-          {tempUnit == 'C' ? currentTemp : 'XYZ'}°{tempUnit}
+          {tempUnit == 'C' ? weather?.currentTemp : 'XYZ'}°{tempUnit}
         </p>
         <p>
-          High: {high} Low: {low}
+          High: {weather?.high} Low: {weather?.low}
         </p>
       </div>
 
@@ -69,8 +63,8 @@ const DashboardWeatherOverview = ({
           </div>
 
           <div className='flex flex-col mt-2 items-center'>
-            <p className='text-2xl font-medium'>{condition}</p>
-            <p className='text-[15px]'>Feels Like {feelsLike}</p>
+            <p className='text-2xl font-medium'>{weather?.condition}</p>
+            <p className='text-[15px]'>Feels Like {weather?.feelsLike}</p>
           </div>
         </div>
       </div>
