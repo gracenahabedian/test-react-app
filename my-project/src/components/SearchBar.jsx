@@ -39,7 +39,7 @@ const SearchBar = ({ setSearch }) => {
           value={currSearch}
         />
         <button
-          className='absolute right-1 top-1/2 -translate-y-1/2 p-4 bg-[#D8BFD8] rounded-full'
+          className='absolute right-1 top-1/2 -translate-y-1/2 p-4 bg-[#D8BFD8] rounded-full hover:bg-[#caaacadb]'
           onClick={() => {
             setSearch(currSearch);
           }}
@@ -57,6 +57,7 @@ const SearchBar = ({ setSearch }) => {
                 setAutofillList([]);
                 setSearch(s);
               }}
+              className='hover:bg-[#e2cae2] rounded-md'
             >
               {s}
             </p>

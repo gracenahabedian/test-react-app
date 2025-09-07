@@ -39,25 +39,49 @@ const DashboardWeatherOverview = ({
         <div className='flex flex-col min-w-32'>
           <div className='flex flex-col gap-4'>
             <div className='flex flex-row w-full gap-2'>
-              <div className='bg-[#98bac4] drop-shadow-lg flex-1 rounded-[20px]'>
+              <div
+                className={`drop-shadow-lg flex-1 rounded-[20px] ${
+                  tempUnit === 'F'
+                    ? 'bg-[#5e8390ee]'
+                    : 'bg-[#98bac4] hover:bg-[#83aab6]'
+                }`}
+              >
                 <div
                   className='flex justify-center'
                   onClick={() => {
                     setTempUnit('F');
                   }}
                 >
-                  <p>°F</p>
+                  <p
+                    className={`${
+                      tempUnit === 'F'
+                        ? 'text-black text-opacity-50'
+                        : 'text-black'
+                    }`}
+                  >
+                    °F
+                  </p>
                 </div>
               </div>
               <div
-                className={`bg-[#5e8390ee] drop-shadow-lg flex-1 rounded-[20px]`}
+                className={`drop-shadow-lg flex-1 rounded-[20px] ${
+                  tempUnit === 'C'
+                    ? 'bg-[#5e8390ee]'
+                    : 'bg-[#98bac4] hover:bg-[#83aab6]'
+                }`}
               >
-                <div className='flex justify-center'>
+                <div
+                  className='flex justify-center'
+                  onClick={() => {
+                    setTempUnit('C');
+                  }}
+                >
                   <p
-                    className='text-black text-opacity-50'
-                    onClick={() => {
-                      setTempUnit('C');
-                    }}
+                    className={`${
+                      tempUnit === 'C'
+                        ? 'text-black text-opacity-50'
+                        : 'text-black'
+                    }`}
                   >
                     °C
                   </p>
