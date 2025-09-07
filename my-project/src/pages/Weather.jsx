@@ -122,8 +122,14 @@ function Weather() {
   if (location) {
     if (!cities.map((c) => c.toLowerCase()).includes(location.toLowerCase())) {
       return (
-        <div className='h-full w-full flex-col flex justify-center items-center'>
+        <div className='h-full w-full flex-col flex justify-center items-center gap-5'>
           <h1>Sorry! We can't find any valid weather data for "{location}"</h1>
+          <button
+            className='bg-[#D8BFD8] rounded-lg h-14 w-48 hover:bg-[#caaacadb]'
+            onClick={() => navigate('/weather')}
+          >
+            <p className='font-medium'>Return to Home Page</p>
+          </button>
         </div>
       );
     }
